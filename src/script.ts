@@ -1,3 +1,6 @@
+declare var WANTED_WIDTH: number;
+declare var fullWidth: number;
+
 var cssAttributes: string[] = [
     "align-content",
     "align-items",
@@ -177,8 +180,6 @@ var cssAttributes: string[] = [
     "word-wrap",
     "z-index"
 ]
-declare var WANTED_WIDTH: number;
-declare var fullWidth: number;
 
 export class Counter {
     map: { [key: string]: number } = {};
