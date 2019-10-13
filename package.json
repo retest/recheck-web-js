@@ -2,8 +2,11 @@
   "name": "getelementbypath",
   "version": "1.0.2",
   "description": "",
-  "main": "src/script.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "prepublish": "tsc",
   "scripts": {
+    "build": "tsc",
     "test": "mocha -r ts-node/register tests/*.spec.ts"
   },
   "author": "",
