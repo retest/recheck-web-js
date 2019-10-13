@@ -177,9 +177,8 @@ var cssAttributes: string[] = [
     "word-wrap",
     "z-index"
 ]
-
-const WANTED_WIDTH = 1;
-const fullWidth = 2;
+declare var WANTED_WIDTH: number;
+declare var fullWidth: number;
 
 export class Counter {
     map: { [key: string]: number } = {};
