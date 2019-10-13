@@ -1,6 +1,6 @@
 {
-  "name": "getelementbypath",
-  "version": "1.0.2",
+  "name": "get-element-by-path",
+  "version": "1.0.3",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
