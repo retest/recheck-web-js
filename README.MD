@@ -20,3 +20,8 @@ var allElements = mapElement(htmlNode, "//html[1]", {
 });
 console.log(allElements);
 ```
+
+## Test 
+```sh
+npm run test
+```

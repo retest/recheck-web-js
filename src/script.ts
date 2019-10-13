@@ -1,11 +1,188 @@
-"use strict";
-import * as cssAttributes from './cssAttributes.json';
+var cssAttributes: string[] = [
+    "align-content",
+    "align-items",
+    "align-self",
+    "all",
+    "animation-name",
+    "animation-duration",
+    "animation-timing-function",
+    "animation-delay",
+    "animation-iteration-count",
+    "animation-direction",
+    "animation-fill-mode",
+    "animation-play-state",
+    "backface-visibility",
+    "background-attachment",
+    "background-blend-mode",
+    "background-clip",
+    "background-color",
+    "background-image",
+    "background-origin",
+    "background-position",
+    "background-repeat",
+    "background-size",
+    "border-bottom-style",
+    "border-bottom-color",
+    "border-bottom-left-radius",
+    "border-bottom-right-radius",
+    "border-bottom-width",
+    "border-collapse",
+    "border-image-outset",
+    "border-image-repeat",
+    "border-image-slice",
+    "border-image-source",
+    "border-image-width",
+    "border-left-color",
+    "border-left-style",
+    "border-left-width",
+    "border-radius",
+    "border-right-color",
+    "border-right-style",
+    "border-right-width",
+    "border-spacing",
+    "border-top-color",
+    "border-top-left-radius",
+    "border-top-right-radius",
+    "border-top-style",
+    "border-top-width",
+    "bottom",
+    "box-decoration-break",
+    "box-shadow",
+    "box-sizing",
+    "break-after",
+    "break-before",
+    "break-inside",
+    "caption-side",
+    "caret-color",
+    "clear",
+    "clip",
+    "color",
+    "column-count",
+    "column-fill",
+    "column-gap",
+    "column-rule-color",
+    "column-rule-style",
+    "column-rule-width",
+    "column-span",
+    "column-width",
+    "content",
+    "counter-increment",
+    "counter-reset",
+    "direction",
+    "display",
+    "empty-cells",
+    "filter",
+    "flex-basis",
+    "flex-direction",
+    "flex-grow",
+    "flex-shrink",
+    "flex-wrap",
+    "float",
+    "font-family",
+    "font-size",
+    "line-height",
+    "text-align",
+    "text-indent",
+    "float",
+    "font-kerning",
+    "font-size",
+    "font-size-adjust",
+    "font-stretch",
+    "font-style",
+    "font-variant",
+    "font-weight",
+    "grid-auto-columns",
+    "grid-auto-flow",
+    "grid-auto-rows",
+    "grid-column-end",
+    "grid-column-start",
+    "grid-row-end",
+    "grid-row-start",
+    "grid-template-areas",
+    "grid-template-columns",
+    "grid-template-rows",
+    "grid-row-gap",
+    "grid-column-gap",
+    "hanging-punctuation",
+    "hyphens",
+    "isolation",
+    "justify-content",
+    "left",
+    "letter-spacing",
+    "line-height",
+    "list-style-image",
+    "list-style-position",
+    "list-style-type",
+    "margin-top",
+    "margin-right",
+    "margin-bottom",
+    "margin-left",
+    "max-height",
+    "max-width",
+    "min-height",
+    "min-width",
+    "mix-blend-mode",
+    "object-fit",
+    "object-position",
+    "opacity",
+    "order",
+    "outline-color",
+    "outline-offset",
+    "outline-style",
+    "outline-width",
+    "overflow-x",
+    "overflow-y",
+    "offsetHeight",
+    "offsetWidth",
+    "padding-top",
+    "padding-right",
+    "padding-bottom",
+    "padding-left",
+    "page-break-after",
+    "page-break-before",
+    "page-break-inside",
+    "perspective",
+    "pointer-events",
+    "position",
+    "quotes",
+    "resize",
+    "right",
+    "scroll-behavior",
+    "tab-size",
+    "table-layout",
+    "text-align",
+    "text-align-last",
+    "text-decoration-color",
+    "text-decoration-line",
+    "text-decoration-style",
+    "text-indent",
+    "text-justify",
+    "text-overflow",
+    "text-shadow",
+    "text-transform",
+    "top",
+    "transform",
+    "transform-style",
+    "transition-delay",
+    "transition-duration",
+    "transition-property",
+    "transition-timing-function",
+    "unicode-bidi",
+    "user-select",
+    "vertical-align",
+    "visibility",
+    "white-space",
+    "word-break",
+    "word-spacing",
+    "word-wrap",
+    "z-index"
+]
+
+const WANTED_WIDTH = 1;
+const fullWidth = 2;
 
 export class Counter {
-    map: Array<string>
-    constructor() {
-        this.map = []
-    }
+    map: { [key: string]: number } = {};
 
     increase(element: HTMLElement) {
         if (element.tagName in this.map) {
@@ -39,17 +216,18 @@ export function getY(node: Element): number {
     return rect.top + window.scrollY;
 }
 
-export function addCoordinates(extractedAttributes: Array<any>, node: Element): void {
+export function addCoordinates(extractedAttributes: { [key: string]: any }, node: Element): void {
     // these attributes need special treatment
     extractedAttributes["absolute-x"] = getX(node) * (WANTED_WIDTH / fullWidth);
     extractedAttributes["absolute-y"] = getY(node) * (WANTED_WIDTH / fullWidth);
     extractedAttributes["absolute-width"] = node.getBoundingClientRect().width * (WANTED_WIDTH / fullWidth);
     extractedAttributes["absolute-height"] = node.getBoundingClientRect().height * (WANTED_WIDTH / fullWidth);
-    if (typeof node.parentNode.getBoundingClientRect === "export function") {
-        extractedAttributes["x"] = getX(node) - getX(node.parentNode);
-        extractedAttributes["y"] = getY(node) - getY(node.parentNode);
-        extractedAttributes["width"] = node.getBoundingClientRect().width - node.parentNode.getBoundingClientRect().width;
-        extractedAttributes["height"] = node.getBoundingClientRect().height - node.parentNode.getBoundingClientRect().height;
+    let parentNode = <Element>node.parentNode;
+    if (typeof parentNode.getBoundingClientRect === "function") {
+        extractedAttributes["x"] = getX(node) - getX(parentNode);
+        extractedAttributes["y"] = getY(node) - getY(parentNode);
+        extractedAttributes["width"] = node.getBoundingClientRect().width - parentNode.getBoundingClientRect().width;
+        extractedAttributes["height"] = node.getBoundingClientRect().height - parentNode.getBoundingClientRect().height;
     }
     else {
         extractedAttributes["x"] = getX(node);
@@ -59,7 +237,7 @@ export function addCoordinates(extractedAttributes: Array<any>, node: Element): 
     }
 }
 
-export function isDisabled(node: HTMLElement | HTMLSelectElement): boolean {
+export function isDisabled(node: any): boolean {
     if (!node.disabled) {
         return false;
     }
@@ -69,19 +247,19 @@ export function isDisabled(node: HTMLElement | HTMLSelectElement): boolean {
     if (node.disabled === "disabled") {
         return true;
     }
-    return node.disabled;
+    return node.disabled ? true : false;
 }
 
-export function transform(node: Node): Array<any> {
-    var extractedAttributes = {
-        "tagName": node.tagName.toLowerCase(),
-        "text": getText(node),
-        "value": node.value,
-        "tab-index": node.tabIndex,
-        "shown": isShown(node)
+export function transform(node: any):  { [key: string]: any } {
+    var extractedAttributes: {[k: string]: any} = {
+        "tagName": <string>node.tagName.toLowerCase(),
+        "text": <string>getText(node),
+        "value": <string>node.value,
+        "tab-index": <number>node.tabIndex,
+        "shown": <boolean>isShown(node)
     };
     if (node.nodeType == node.TEXT_NODE) {
-        addCoordinates(extractedAttributes, node.parentNode);
+        addCoordinates(extractedAttributes, <Element>node.parentNode);
         return extractedAttributes;
     }
     // extract *all* HTML element attributes
@@ -92,20 +270,20 @@ export function transform(node: Node): Array<any> {
         extractedAttributes[attributeName] = attributeValue;
     }
     // overwrite empty attributes (e.g. 'disabled')
-    extractedAttributes["disabled"] = isDisabled(node);
+    extractedAttributes["disabled"] = isDisabled(<Element>node);
     extractedAttributes["read-only"] = node.readOnly;
     // extract *given* CSS style attributes
-    var style = window.getComputedStyle(node);
-    var parentStyle = [];
+    var style: {[k: string]: any} = window.getComputedStyle(node);
+    var parentStyle: {[k: string]: any} = {};
     try {
-        parentStyle = window.getComputedStyle(node.parentNode);
+        parentStyle = window.getComputedStyle(<Element>node.parentNode);
     }
     catch (err) { }
     for (var i = 0; i < cssAttributes.length; i++) {
-        var attributeName = cssAttributes[i];
-        if (!extractedAttributes[attributeName]) {
-            if (parentStyle[attributeName] != style[attributeName]) {
-                extractedAttributes[attributeName] = style[attributeName];
+        var attrName = cssAttributes[i];
+        if (!extractedAttributes[attrName]) {
+            if (parentStyle[attrName] != style[attrName]) {
+                extractedAttributes[attrName] = style[attrName];
             }
         }
     }
@@ -113,37 +291,38 @@ export function transform(node: Node): Array<any> {
     return extractedAttributes;
 }
 
-export function isShown(e: Node | HTMLElement | Element): boolean {
+export function isShown(e: any): boolean {
     if (e.nodeType == e.TEXT_NODE) {
-        return isShown(e.parentNode);
+        return isShown(<Element>e.parentNode);
     }
     return !!(e.offsetWidth || e.offsetHeight || e.getClientRects().length);
 }
 
 export function isNonEmptyTextNode(node: Node): boolean {
-    return node.nodeType == node.TEXT_NODE && node.nodeValue.trim().length > 0;
+    var nodeValue = (node.nodeValue == null) ? "" : node.nodeValue;
+    return node.nodeType == node.TEXT_NODE && nodeValue.trim().length > 0;
 }
 
 export function containsOtherElements(element: HTMLElement): boolean {
     return element.children.length > 0;
 }
 
-export function mapElement(element: HTMLElement, parentPath: string, allElements: Array<HTMLElement>): Array<HTMLElement> {
+export function mapElement(element: HTMLElement, parentPath: string, allElements: {[k: string]: any}):  {[k: string]: any} {
     if (!element || !element.children) {
         return allElements;
     }
     var counter = new Counter();
     for (var i = 0; i < element.childNodes.length; i++) {
-        var child = element.childNodes[i];
+        var child: {[k: string]: any} = element.childNodes[i];
         if (child.nodeType == child.ELEMENT_NODE ||
-            (isNonEmptyTextNode(child) && containsOtherElements(element))) {
+            (isNonEmptyTextNode(<HTMLElement>child) && containsOtherElements(element))) {
             if (child.nodeType == child.TEXT_NODE) {
                 child.tagName = "textnode";
             }
-            var cnt = counter.increase(child);
+            var cnt = counter.increase(<HTMLElement>child);
             var path = parentPath + "/" + child.tagName.toLowerCase() + "[" + cnt + "]";
-            allElements[path] = transform(child);
-            mapElement(child, path, allElements);
+            allElements[path] = transform(<HTMLElement>child);
+            mapElement(<HTMLElement>child, path, allElements);
         }
     }
     return allElements;
