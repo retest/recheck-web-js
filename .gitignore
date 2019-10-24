@@ -1,15 +1,21 @@
 node_modules/
 dist/
+
 # Ignore files with sensitive environment variables
 .env
 .env.test
+
 # Next.js output
 .next/
+
 # Parcel cache
 .cache/
+
 # Ignore IDE configuration files
 .idea/ 
 .vscode/
+.project
+
 # Logs
 logs
 *.log
