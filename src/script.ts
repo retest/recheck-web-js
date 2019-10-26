@@ -356,3 +356,17 @@ export function mapElement(element: HTMLElement, parentPath: string, allElements
     }
     return allElements;
 }
+
+export function getAllElementsByXPath(node: any): {[k: string]: any} {
+	var rootNode = document.getElementsByTagName("html")[0];
+	var rootPath = "//html[1]";
+	if (node) {
+	    rootNode = node;
+	    rootPath = getElementXPath(rootNode);
+	}
+	var root = transform(rootNode);
+	var allElements = {};
+	allElements[rootPath] = root;
+	allElements = mapElement(rootNode, rootPath, allElements);
+	return allElements;
+}
