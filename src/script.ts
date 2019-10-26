@@ -250,6 +250,14 @@ export function isDisabled(node: any): boolean {
     return node.disabled ? true : false;
 }
 
+//extract *given* CSS style attributes
+export function getComputedStyleSafely(node: Element): {[k: string]: any} {
+    try {
+        return window.getComputedStyle(node) || {};
+    } catch (err) {}
+    return {};
+}
+
 export function transform(node: any):  { [key: string]: any } {
     var extractedAttributes: {[k: string]: any} = {
         "tagName": <string>node.tagName.toLowerCase(),
@@ -273,12 +281,8 @@ export function transform(node: any):  { [key: string]: any } {
     extractedAttributes["disabled"] = isDisabled(<Element>node);
     extractedAttributes["read-only"] = node.readOnly;
     // extract *given* CSS style attributes
-    var style: {[k: string]: any} = window.getComputedStyle(node);
-    var parentStyle: {[k: string]: any} = {};
-    try {
-        parentStyle = window.getComputedStyle(<Element>node.parentNode);
-    }
-    catch (err) { }
+    var style: {[k: string]: any} = getComputedStyleSafely(<Element>node);
+    var parentStyle: {[k: string]: any} = getComputedStyleSafely(<Element>node.parentNode);
     for (var i = 0; i < cssAttributes.length; i++) {
         var attrName = cssAttributes[i];
         if (!extractedAttributes[attrName]) {
