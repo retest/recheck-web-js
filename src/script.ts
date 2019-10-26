@@ -1,5 +1,6 @@
-declare var WANTED_WIDTH: number;
-declare var fullWidth: number;
+declare var WANTED_WIDTH: number = 800;
+declare var fullWidth: number = max([ document.documentElement.clientWidth, document.body ? document.body.scrollWidth : 0, document.documentElement.scrollWidth,
+			document.body ? document.body.offsetWidth : 0, document.documentElement.offsetWidth ]);
 
 var cssAttributes: string[] = [
     "align-content",
