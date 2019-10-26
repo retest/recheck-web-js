@@ -315,6 +315,27 @@ export function containsOtherElements(element: HTMLElement): boolean {
     return element.children.length > 0;
 }
 
+export function getElementXPath(node: Node): string {
+    var paths = [];
+    for ( ; node && node.nodeType == Node.ELEMENT_NODE; node = node.parentNode)  {
+        var index = 0;
+        for (var sibling = node.previousSibling; sibling; sibling = sibling.previousSibling) {
+            if (sibling.nodeType == Node.DOCUMENT_TYPE_NODE) {
+                continue;
+            }
+
+            if (sibling.nodeName == node.nodeName) {
+                ++index;
+            }
+        }
+        var tagName = node.nodeName.toLowerCase();
+        var pathIndex = "[" + (index+1) + "]";
+        paths.unshift(tagName + pathIndex);
+    }
+
+    return paths.length ? "/" + paths.join( "/") : null;
+}
+
 export function mapElement(element: HTMLElement, parentPath: string, allElements: {[k: string]: any}):  {[k: string]: any} {
     if (!element || !element.children) {
         return allElements;
