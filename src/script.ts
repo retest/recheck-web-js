@@ -278,6 +278,7 @@ export function transform(node: any):  { [key: string]: any } {
         extractedAttributes[attributeName] = attributeValue;
     }
     // overwrite empty attributes (e.g. 'disabled')
+    extractedAttributes["checked"] = node.checked;
     extractedAttributes["disabled"] = isDisabled(<Element>node);
     extractedAttributes["read-only"] = node.readOnly;
     // extract *given* CSS style attributes
