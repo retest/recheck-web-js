@@ -1,8 +1,6 @@
-declare var WANTED_WIDTH: number = 800;
-declare var fullWidth: number = max([ document.documentElement.clientWidth, document.body ? document.body.scrollWidth : 0, document.documentElement.scrollWidth,
-			document.body ? document.body.offsetWidth : 0, document.documentElement.offsetWidth ]);
+declare const WANTED_WIDTH = 800;
 
-var cssAttributes: string[] = [
+const cssAttributes: string[] = [
     "align-content",
     "align-items",
     "align-self",
@@ -219,7 +217,17 @@ export function getY(node: Element): number {
     return rect.top + window.scrollY;
 }
 
+function getFullWidth():number {
+    const clientWidth = window.document.documentElement.clientWidth;
+    const bodyScrollWidth = window.document.body ? window.document.body.scrollWidth : 0;
+    const documentScrollWidth =  window.document.documentElement.scrollWidth;
+    const bodyOffsetWidth = window.document.body ? window.document.body.offsetWidth : 0;
+    const documentOffsetWidth = window.document.documentElement.offsetWidth;
+    return Math.max(clientWidth, bodyScrollWidth, documentScrollWidth, bodyOffsetWidth, documentOffsetWidth);
+}
+
 export function addCoordinates(extractedAttributes: { [key: string]: any }, node: Element): void {
+    const fullWidth = getFullWidth();
     // these attributes need special treatment
     extractedAttributes["absolute-x"] = getX(node) * (WANTED_WIDTH / fullWidth);
     extractedAttributes["absolute-y"] = getY(node) * (WANTED_WIDTH / fullWidth);
@@ -315,7 +323,7 @@ export function containsOtherElements(element: HTMLElement): boolean {
     return element.children.length > 0;
 }
 
-export function getElementXPath(node: Node): string {
+export function getElementXPath(node: Node|null): string {
     var paths = [];
     for ( ; node && node.nodeType == Node.ELEMENT_NODE; node = node.parentNode)  {
         var index = 0;
@@ -333,7 +341,7 @@ export function getElementXPath(node: Node): string {
         paths.unshift(tagName + pathIndex);
     }
 
-    return paths.length ? "/" + paths.join( "/") : null;
+    return paths.length ? "/" + paths.join( "/") : "";
 }
 
 export function mapElement(element: HTMLElement, parentPath: string, allElements: {[k: string]: any}):  {[k: string]: any} {
@@ -365,7 +373,7 @@ export function getAllElementsByXPath(node: any): {[k: string]: any} {
 	    rootPath = getElementXPath(rootNode);
 	}
 	var root = transform(rootNode);
-	var allElements = {};
+	var allElements: {[k: string]: any} = {};
 	allElements[rootPath] = root;
 	allElements = mapElement(rootNode, rootPath, allElements);
 	return allElements;
