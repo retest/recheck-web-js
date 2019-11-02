@@ -1,7 +1,7 @@
 import { getText } from '../src/script';
 import { expect } from 'chai';
 import 'mocha';
-import jsdom from 'jsdom';
+import * as jsdom from 'jsdom';
 const { JSDOM } = jsdom;
 const dom = new JSDOM(`<!DOCTYPE html><div><p>Hello world</p></div>`);
  
