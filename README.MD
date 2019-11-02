@@ -1,5 +1,7 @@
 # recheck-web-js
 
+[![Build Status](https://travis-ci.com/retest/recheck-web-js.svg?branch=master)](https://travis-ci.com/retest/recheck-web-js)
+
 This is the JavaScript behind [recheck-web](https://github.com/retest/recheck-web) and the corresponding [Chrome extension](https://github.com/retest/recheck-web-chrome-extension). What it does is collect all attributes of all elements of the rendered DOM. This can then be collected by recheck-web or sent to retest.de. 
 
 ## Installation
