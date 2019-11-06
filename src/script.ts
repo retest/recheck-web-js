@@ -17,10 +17,10 @@ export class Counter {
 
 export function getText(node: Node): string | null {
     var firstNode = node.childNodes[0];
-    if (firstNode && firstNode.nodeType == node.TEXT_NODE) {
+    if (firstNode && firstNode.nodeType === node.TEXT_NODE) {
         return firstNode.nodeValue;
     }
-    if (node.nodeType == node.TEXT_NODE) {
+    if (node.nodeType === node.TEXT_NODE) {
         return node.nodeValue;
     }
     return "";
@@ -96,7 +96,7 @@ export function transform(node: any):  { [key: string]: any } {
         "tab-index": <number>node.tabIndex,
         "shown": <boolean>isShown(node)
     };
-    if (node.nodeType == node.TEXT_NODE) {
+    if (node.nodeType === node.TEXT_NODE) {
         addCoordinates(extractedAttributes, <Element>node.parentNode);
         return extractedAttributes;
     }
@@ -127,15 +127,15 @@ export function transform(node: any):  { [key: string]: any } {
 }
 
 export function isShown(e: any): boolean {
-    if (e.nodeType == e.TEXT_NODE) {
+    if (e.nodeType === e.TEXT_NODE) {
         return isShown(<Element>e.parentNode);
     }
     return !!(e.offsetWidth || e.offsetHeight || e.getClientRects().length);
 }
 
 export function isNonEmptyTextNode(node: Node): boolean {
-    var nodeValue = (node.nodeValue == null) ? "" : node.nodeValue;
-    return node.nodeType == node.TEXT_NODE && nodeValue.trim().length > 0;
+    var nodeValue = (node.nodeValue === null) ? "" : node.nodeValue;
+    return node.nodeType === node.TEXT_NODE && nodeValue.trim().length > 0;
 }
 
 export function containsOtherElements(element: HTMLElement): boolean {
@@ -144,14 +144,14 @@ export function containsOtherElements(element: HTMLElement): boolean {
 
 export function getElementXPath(node: Node|null): string {
     var paths = [];
-    for ( ; node && node.nodeType == Node.ELEMENT_NODE; node = node.parentNode)  {
+    for ( ; node && node.nodeType === Node.ELEMENT_NODE; node = node.parentNode)  {
         var index = 0;
         for (var sibling = node.previousSibling; sibling; sibling = sibling.previousSibling) {
-            if (sibling.nodeType == Node.DOCUMENT_TYPE_NODE) {
+            if (sibling.nodeType === Node.DOCUMENT_TYPE_NODE) {
                 continue;
             }
 
-            if (sibling.nodeName == node.nodeName) {
+            if (sibling.nodeName === node.nodeName) {
                 ++index;
             }
         }
@@ -170,9 +170,9 @@ export function mapElement(element: HTMLElement, parentPath: string, allElements
     var counter = new Counter();
     for (var i = 0; i < element.childNodes.length; i++) {
         var child: {[k: string]: any} = element.childNodes[i];
-        if (child.nodeType == child.ELEMENT_NODE ||
+        if (child.nodeType === child.ELEMENT_NODE ||
             (isNonEmptyTextNode(<HTMLElement>child) && containsOtherElements(element))) {
-            if (child.nodeType == child.TEXT_NODE) {
+            if (child.nodeType === child.TEXT_NODE) {
                 child.tagName = "textnode";
             }
             var cnt = counter.increase(<HTMLElement>child);
