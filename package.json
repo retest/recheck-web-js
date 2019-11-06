@@ -16,17 +16,17 @@
     "@types/chai": "^4.2.4",
     "@types/jsdom": "^12.2.4",
     "@types/mocha": "^5.2.7",
-    "@typescript-eslint/eslint-plugin": "^2.6.0",
-    "@typescript-eslint/parser": "^2.6.0",
+    "@typescript-eslint/eslint-plugin": "^2.6.1",
+    "@typescript-eslint/parser": "^2.6.1",
     "chai": "^4.2.0",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.1",
-    "jsdom": "^15.2.0",
+    "jsdom": "^15.2.1",
     "mocha": "^6.2.2",
     "prettier": "^1.18.2",
     "ts-node": "^8.4.1",
-    "typescript": "^3.6.4"
+    "typescript": "^3.7.2"
   }
 }
