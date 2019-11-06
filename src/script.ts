@@ -114,8 +114,8 @@ export function transform(node: any):  { [key: string]: any } {
     // extract *given* CSS style attributes
     var style: {[k: string]: any} = getComputedStyleSafely(<Element>node);
     var parentStyle: {[k: string]: any} = getComputedStyleSafely(<Element>node.parentNode);
-    for (var i = 0; i < cssAttributes.length; i++) {
-        var attrName = cssAttributes[i];
+    for (let i = 0; i < cssAttributes.length; i++) {
+        const attrName = cssAttributes[i];
         if (!extractedAttributes[attrName]) {
             if (parentStyle[attrName] != style[attrName]) {
                 extractedAttributes[attrName] = style[attrName];
@@ -134,7 +134,7 @@ export function isShown(e: any): boolean {
 }
 
 export function isNonEmptyTextNode(node: Node): boolean {
-    var nodeValue = (node.nodeValue === null) ? "" : node.nodeValue;
+    const nodeValue = (node.nodeValue === null) ? "" : node.nodeValue;
     return node.nodeType === node.TEXT_NODE && nodeValue.trim().length > 0;
 }
 
@@ -143,10 +143,10 @@ export function containsOtherElements(element: HTMLElement): boolean {
 }
 
 export function getElementXPath(node: Node|null): string {
-    var paths = [];
+    let paths = [];
     for ( ; node && node.nodeType === Node.ELEMENT_NODE; node = node.parentNode)  {
-        var index = 0;
-        for (var sibling = node.previousSibling; sibling; sibling = sibling.previousSibling) {
+        let index = 0;
+        for (let sibling = node.previousSibling; sibling; sibling = sibling.previousSibling) {
             if (sibling.nodeType === Node.DOCUMENT_TYPE_NODE) {
                 continue;
             }
@@ -155,8 +155,8 @@ export function getElementXPath(node: Node|null): string {
                 ++index;
             }
         }
-        var tagName = node.nodeName.toLowerCase();
-        var pathIndex = "[" + (index+1) + "]";
+        const tagName = node.nodeName.toLowerCase();
+        let pathIndex = "[" + (index+1) + "]";
         paths.unshift(tagName + pathIndex);
     }
 
