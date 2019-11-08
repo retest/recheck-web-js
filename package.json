@@ -1,7 +1,14 @@
 {
   "name": "recheck-web-js",
   "version": "1.0.4",
-  "description": "",
+  "description": "Javascript package for recheck-web",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/retest/recheck-web-js"
+  },
+  "bugs": {
+    "url": "https://github.com/retest/recheck-web-js/issues"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "prepublish": "tsc",
