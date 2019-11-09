@@ -1,5 +1,4 @@
 import { cssAttributes } from './cssAttributes';
-declare const WANTED_WIDTH = 800;
 
 export class Counter {
   map: { [key: string]: number } = {};
@@ -46,6 +45,7 @@ function getFullWidth(): number {
 
 export function addCoordinates(extractedAttributes: { [key: string]: any }, node: Element): void {
   const fullWidth = getFullWidth();
+  const WANTED_WIDTH = 800;
   // these attributes need special treatment
   extractedAttributes['absolute-x'] = getX(node) * (WANTED_WIDTH / fullWidth);
   extractedAttributes['absolute-y'] = getY(node) * (WANTED_WIDTH / fullWidth);
@@ -79,7 +79,10 @@ export function isDisabled(node: any): boolean {
 }
 
 //extract *given* CSS style attributes
-export function getComputedStyleSafely(node: Element): { [k: string]: any } {
+export function getComputedStyleSafely(node: Element|null): { [k: string]: any } {
+  if (node === null) {
+    return {};
+  }
   try {
     return window.getComputedStyle(node) || {};
   } catch (err) {}
