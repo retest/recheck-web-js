@@ -14,13 +14,16 @@
   "prepublish": "tsc",
   "scripts": {
     "build": "tsc",
-    "test": "mocha -r ts-node/register tests/*.spec.ts",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test": "npm run cy:run",
     "coverage": "nyc npm run test"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
+    "@cypress/webpack-preprocessor": "^4.1.0",
     "@istanbuljs/nyc-config-typescript": "^0.1.3",
     "@types/chai": "^4.2.4",
     "@types/jsdom": "^12.2.4",
@@ -29,8 +32,10 @@
     "@typescript-eslint/eslint-plugin": "^2.6.1",
     "@typescript-eslint/parser": "^2.6.1",
     "chai": "^4.2.0",
+    "cypress": "^3.6.1",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-cypress": "^2.7.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-mocha": "^6.2.1",
     "eslint-plugin-prettier": "^3.1.1",
@@ -38,9 +43,14 @@
     "jsdom-global": "3.0.2",
     "mocha": "^6.2.2",
     "nyc": "^14.1.1",
+    "path": "^0.12.7",
     "prettier": "^1.18.2",
     "source-map-support": "^0.5.16",
+    "start-server-and-test": "^1.10.6",
+    "ts-loader": "^6.2.1",
     "ts-node": "^8.4.1",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.2",
+    "webpack": "^4.41.2",
+    "webpack-node-externals": "^1.7.2"
   }
 }

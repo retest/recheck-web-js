@@ -1,0 +1,21 @@
+<head>
+  <script>
+    document.domain = 'localhost';
+    var Cypress = (window.Cypress = parent.Cypress);
+    Cypress.action('app:window:before:load', window);
+  </script>
+  <head>
+    <style>
+      #id1 .clazz {
+        margin-left: 100px;
+      }
+    </style>
+  </head>
+<body>
+  <div class="root-el">
+    <p class="paragraph">Hello world</p>
+  </div>
+  <div id="id1"><span class="clazz"></span></div>
+  <button disabled></button>
+  <input disabled="disabled" />
+</body>
