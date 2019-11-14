@@ -1,6 +1,10 @@
 # recheck-web-js
 
 [![Build Status](https://travis-ci.com/retest/recheck-web-js.svg?branch=master)](https://travis-ci.com/retest/recheck-web-js)
+[![Latest recheck on Maven Central](https://maven-badges.herokuapp.com/maven-central/org.webjars.npm/recheck-web-js/badge.svg?style=flat)](https://mvnrepository.com/artifact/org.webjars.npm/recheck-web-js)
+[![license](https://img.shields.io/badge/license-AGPL-brightgreen.svg)](https://github.com/retest/recheck/blob/master/LICENSE)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg)](https://github.com/retest/recheck-web-js/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
+[![code with hearth by retest](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-retest-C1D82F.svg)](https://retest.de/)
 
 This is the JavaScript behind [recheck-web](https://github.com/retest/recheck-web) and the corresponding [Chrome extension](https://github.com/retest/recheck-web-chrome-extension). What it does is collect all attributes of all elements of the rendered DOM. This can then be collected by recheck-web or sent to retest.de. 
 
