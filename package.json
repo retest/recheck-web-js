@@ -24,7 +24,7 @@
     "email": "opensource+recheck-web-js@retest.de",
     "url": "https://retest.de/"
   },
-  "license": "GNU AGPLv3",
+  "license": "AGPL-V3",
   "dependencies": {},
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^4.1.0",
