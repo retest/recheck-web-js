@@ -1,6 +1,6 @@
 {
   "name": "recheck-web-js",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Javascript package for recheck-web",
   "repository": {
     "type": "git",
@@ -20,9 +20,9 @@
     "coverage": "nyc npm run test"
   },
   "author": {
-    "name" : "ReTest GmbH",
-    "email" : "opensource+recheck-web-js@retest.de",
-    "url" : "https://retest.de/"
+    "name": "ReTest GmbH",
+    "email": "opensource+recheck-web-js@retest.de",
+    "url": "https://retest.de/"
   },
   "license": "GNU AGPLv3",
   "dependencies": {},
