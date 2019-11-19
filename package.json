@@ -19,8 +19,12 @@
     "test": "npm run cy:run",
     "coverage": "nyc npm run test"
   },
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name" : "ReTest GmbH",
+    "email" : "opensource+recheck-web-js@retest.de",
+    "url" : "https://retest.de/"
+  },
+  "license": "GNU AGPLv3",
   "dependencies": {},
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^4.1.0",
