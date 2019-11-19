@@ -11,3 +11,14 @@ install:
   - npm i -g npm@6.0.1
   - npm ci
   - npm run build
+
+
+deploy:
+  provider: npm
+  email: "$NPM_EMAIL_ADDRESS"
+  api_key: "$NPM_API_KEY"
+  on:
+    tags: true
+  after_deploy:
+    sleep 60 ;
+    wget https://www.webjars.org/deploy?webJarType=npm&nameOrUrlish=recheck-web-js&version=${TRAVIS_TAG:1}
