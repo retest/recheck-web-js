@@ -1,17 +1,15 @@
 {
   "compilerOptions": {
-    "module": "es6",
+    "module": "commonjs",
     "target": "es5",
-    "lib": ["es6", "dom", "es2017",],
+    "lib": ["es6", "dom"],
     "declaration": true,
-    "outDir": "./dist/",
+    "outDir": "dist",
     "strict": true,
     "esModuleInterop": true,
     "sourceMap": true,
-    "moduleResolution": "node",
-    "types": ["cypress"]
+    "moduleResolution": "node"
   },
-  "allowJs": true,
   "exclude": [
     "coverage",
     "node_modules",
