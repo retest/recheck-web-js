@@ -1,15 +1,13 @@
 {
     "env": {
         "browser": true,
-        "es6": true,
-        "cypress/globals": true
+        "es6": true
     },
     "extends": [
         "plugin:@typescript-eslint/recommended", 
         "prettier/@typescript-eslint",
         "plugin:prettier/recommended",
-        "plugin:mocha/recommended",
-        "plugin:cypress/recommended"
+        "plugin:mocha/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -18,8 +16,7 @@
     },
     "plugins": [
         "@typescript-eslint",
-        "mocha",
-        "cypress"
+        "mocha"
     ],
     "rules": {
     }
