@@ -45,12 +45,11 @@ function getFullWidth(): number {
 
 export function addCoordinates(extractedAttributes: { [key: string]: any }, node: Element): void {
   const fullWidth = getFullWidth();
-  const WANTED_WIDTH = 800;
   // these attributes need special treatment
-  extractedAttributes['absolute-x'] = getX(node) * (WANTED_WIDTH / fullWidth);
-  extractedAttributes['absolute-y'] = getY(node) * (WANTED_WIDTH / fullWidth);
-  extractedAttributes['absolute-width'] = node.getBoundingClientRect().width * (WANTED_WIDTH / fullWidth);
-  extractedAttributes['absolute-height'] = node.getBoundingClientRect().height * (WANTED_WIDTH / fullWidth);
+  extractedAttributes['absolute-x'] = getX(node);
+  extractedAttributes['absolute-y'] = getY(node);
+  extractedAttributes['absolute-width'] = node.getBoundingClientRect().width;
+  extractedAttributes['absolute-height'] = node.getBoundingClientRect().height;
   const parentNode = node.parentNode as Element;
   if (typeof parentNode.getBoundingClientRect === 'function') {
     extractedAttributes['x'] = getX(node) - getX(parentNode);
