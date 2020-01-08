@@ -180,7 +180,7 @@ export function mapElement(
   return allElements;
 }
 
-export function getAllElementsByXPath(node: any): { [k: string]: any } {
+export default function getAllElementsByXPath(node: any): { [k: string]: any } {
   let rootNode = document.getElementsByTagName('html')[0];
   let rootPath = '//html[1]';
   if (node) {
