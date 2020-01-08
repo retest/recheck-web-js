@@ -13,6 +13,10 @@ export class Counter {
   }
 }
 
+interface ExportedAttributes {
+  [key: string]: string | number | boolean | undefined
+}
+
 export function getText(node: Node): string | null {
   const firstNode = node.childNodes[0];
   if (firstNode && firstNode.nodeType === node.TEXT_NODE) {
@@ -34,23 +38,23 @@ export function getY(node: Element): number {
   return rect.top + window.scrollY;
 }
 
-export function addCoordinates(extractedAttributes: { [key: string]: any }, node: Element): void {
+export function addCoordinates(attributes: ExportedAttributes, node: Element): void {
   // these attributes need special treatment
-  extractedAttributes['absolute-x'] = getX(node);
-  extractedAttributes['absolute-y'] = getY(node);
-  extractedAttributes['absolute-width'] = node.getBoundingClientRect().width;
-  extractedAttributes['absolute-height'] = node.getBoundingClientRect().height;
+  attributes['absolute-x'] = getX(node);
+  attributes['absolute-y'] = getY(node);
+  attributes['absolute-width'] = node.getBoundingClientRect().width;
+  attributes['absolute-height'] = node.getBoundingClientRect().height;
   const parentNode = node.parentNode as Element;
   if (typeof parentNode.getBoundingClientRect === 'function') {
-    extractedAttributes['x'] = getX(node) - getX(parentNode);
-    extractedAttributes['y'] = getY(node) - getY(parentNode);
-    extractedAttributes['width'] = node.getBoundingClientRect().width - parentNode.getBoundingClientRect().width;
-    extractedAttributes['height'] = node.getBoundingClientRect().height - parentNode.getBoundingClientRect().height;
+    attributes['x'] = getX(node) - getX(parentNode);
+    attributes['y'] = getY(node) - getY(parentNode);
+    attributes['width'] = node.getBoundingClientRect().width - parentNode.getBoundingClientRect().width;
+    attributes['height'] = node.getBoundingClientRect().height - parentNode.getBoundingClientRect().height;
   } else {
-    extractedAttributes['x'] = getX(node);
-    extractedAttributes['y'] = getY(node);
-    extractedAttributes['width'] = node.getBoundingClientRect().width;
-    extractedAttributes['height'] = node.getBoundingClientRect().height;
+    attributes['x'] = getX(node);
+    attributes['y'] = getY(node);
+    attributes['width'] = node.getBoundingClientRect().width;
+    attributes['height'] = node.getBoundingClientRect().height;
   }
 }
 
@@ -86,7 +90,7 @@ export function isShown(e: any): boolean {
 }
 
 export function transform(node: any): { [key: string]: any } {
-  const extractedAttributes: { [k: string]: any } = {
+  const extractedAttributes: ExportedAttributes = {
     tagName: node.tagName.toLowerCase() as string,
     text: getText(node) as string,
     value: node.value as string,
