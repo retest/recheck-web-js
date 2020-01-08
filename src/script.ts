@@ -1,4 +1,4 @@
-import { cssAttributes } from './cssAttributes';
+import cssAttributes from './cssAttributes';
 
 export class Counter {
   map: { [key: string]: number } = {};
@@ -78,7 +78,7 @@ export function isDisabled(node: any): boolean {
 }
 
 //extract *given* CSS style attributes
-export function getComputedStyleSafely(node: Element|null): { [k: string]: any } {
+export function getComputedStyleSafely(node: Element | null): { [k: string]: any } {
   if (node === null) {
     return {};
   }
