@@ -1,8 +1,9 @@
-import { getAllElementsByXPath } from '../src/script';
+import getAllElementsByXPath from '../src/script';
 import { expect } from 'chai';
 import 'mocha';
 import 'jsdom-global/register';
 import * as jsdom from 'jsdom';
+
 const { JSDOM } = jsdom;
 const { window } = new JSDOM(`
     <html>

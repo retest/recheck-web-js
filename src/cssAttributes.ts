@@ -1,4 +1,4 @@
-export const cssAttributes: string[] = [
+export default [
   'align-content',
   'align-items',
   'align-self',

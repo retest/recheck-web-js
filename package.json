@@ -1,6 +1,6 @@
 {
   "name": "recheck-web-js",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Javascript package for recheck-web",
   "repository": {
     "type": "git",
@@ -9,11 +9,14 @@
   "bugs": {
     "url": "https://github.com/retest/recheck-web-js/issues"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/script.js",
+  "types": "dist/script.d.ts",
+  "files": [
+    "dist/"
+  ],
   "prepublish": "tsc",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --sourceMap false -p .",
     "test": "mocha -r ts-node/register tests/*.spec.ts",
     "coverage": "nyc npm run test"
   },
