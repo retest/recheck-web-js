@@ -3,5 +3,6 @@
   "all": true,
   "include": [
     "src/script.ts"
-  ]
+  ],
+  "reporter": "html"
 }
