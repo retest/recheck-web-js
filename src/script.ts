@@ -34,20 +34,7 @@ export function getY(node: Element): number {
   return rect.top + window.scrollY;
 }
 
-// was never used
-// function getFullWidth(): number {
-//   const clientWidth = window.document.documentElement.clientWidth;
-//   const bodyScrollWidth = window.document.body ? window.document.body.scrollWidth : 0;
-//   const documentScrollWidth = window.document.documentElement.scrollWidth;
-//   const bodyOffsetWidth = window.document.body ? window.document.body.offsetWidth : 0;
-//   const documentOffsetWidth = window.document.documentElement.offsetWidth;
-//   return Math.max(clientWidth, bodyScrollWidth, documentScrollWidth, bodyOffsetWidth, documentOffsetWidth);
-// }
-
 export function addCoordinates(extractedAttributes: { [key: string]: any }, node: Element): void {
-  // was never used
-  // const fullWidth = getFullWidth();
-
   // these attributes need special treatment
   extractedAttributes['absolute-x'] = getX(node);
   extractedAttributes['absolute-y'] = getY(node);
