@@ -8,7 +8,7 @@ script:
 - npm test
 
 install:
-  - npm i -g npm@6.0.1
+  - npm i -g npm@6.14.2
   - npm ci
   - npm run build
 
