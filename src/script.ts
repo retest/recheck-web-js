@@ -153,6 +153,20 @@ export function getY(node: Element): number {
   return rect.top + window.scrollY;
 }
 
+export function getWidth(node: Element): number {
+  if (node.getBoundingClientRect().width) {
+    return node.getBoundingClientRect().width;
+  }
+  return node.clientWidth;
+}
+
+export function getHeight(node: Element): number {
+  if (node.getBoundingClientRect().height) {
+    return node.getBoundingClientRect().height;
+  }
+  return node.clientHeight;
+}
+
 export function addCoordinates(attributes: ExportedAttributes, node: Element): void {
   // these attributes need special treatment
   attributes['absolute-x'] = getX(node);
