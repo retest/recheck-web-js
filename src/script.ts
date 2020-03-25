@@ -86,6 +86,7 @@ export function transform(node: any): { [key: string]: any } {
     value: node.value as string,
     tabindex: node.tabIndex as number,
     shown: isShown(node) as boolean,
+    covered: isCovered(node) as boolean,
   };
   if (node.nodeType === node.TEXT_NODE) {
     addCoordinates(extractedAttributes, node.parentNode as Element);
@@ -181,6 +182,34 @@ export function isDisabled(node: any): boolean {
     return true;
   }
   return node.disabled ? true : false;
+}
+
+// check if element is behind another one
+export function isCovered(node: any): boolean {
+  const BOUNDING_PRECISION = 2;
+
+  // TODO Handle false negatives for elements outside of viewport
+  if (typeof node.getBoundingClientRect === 'function' && document.elementFromPoint != undefined) {
+    const boundingRect = node.getBoundingClientRect();
+
+    const boundingLeft = boundingRect.left + BOUNDING_PRECISION;
+    const boundingRight = boundingRect.right - BOUNDING_PRECISION;
+    const boundingTop = boundingRect.top + BOUNDING_PRECISION;
+    const boundingBottom = boundingRect.bottom - BOUNDING_PRECISION;
+
+    const topLeft = document.elementFromPoint(boundingLeft, boundingTop);
+    const topRight = document.elementFromPoint(boundingRight, boundingTop);
+    const bottomLeft = document.elementFromPoint(boundingLeft, boundingBottom);
+    const bottomRight = document.elementFromPoint(boundingRight, boundingBottom);
+    if ((topLeft != null && !node.contains(topLeft))
+      || (topRight != null && !node.contains(topRight))
+      || (bottomLeft != null && !node.contains(bottomLeft))
+      || (bottomRight != null && !node.contains(bottomRight))) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 //extract *given* CSS style attributes
