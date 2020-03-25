@@ -171,19 +171,19 @@ export function addCoordinates(attributes: ExportedAttributes, node: Element): v
   // these attributes need special treatment
   attributes['absolute-x'] = getX(node);
   attributes['absolute-y'] = getY(node);
-  attributes['absolute-width'] = node.getBoundingClientRect().width;
-  attributes['absolute-height'] = node.getBoundingClientRect().height;
+  attributes['absolute-width'] = getWidth(node);
+  attributes['absolute-height'] = getHeight(node);
   const parentNode = node.parentNode as Element;
   if (typeof parentNode.getBoundingClientRect === 'function') {
     attributes['x'] = getX(node) - getX(parentNode);
     attributes['y'] = getY(node) - getY(parentNode);
-    attributes['width'] = node.getBoundingClientRect().width - parentNode.getBoundingClientRect().width;
-    attributes['height'] = node.getBoundingClientRect().height - parentNode.getBoundingClientRect().height;
+    attributes['width'] = getWidth(node) - getWidth(parentNode);
+    attributes['height'] = getHeight(node) - getHeight(parentNode);
   } else {
     attributes['x'] = getX(node);
     attributes['y'] = getY(node);
-    attributes['width'] = node.getBoundingClientRect().width;
-    attributes['height'] = node.getBoundingClientRect().height;
+    attributes['width'] = getWidth(node);
+    attributes['height'] = getHeight(node);
   }
 }
 
