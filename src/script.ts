@@ -130,11 +130,23 @@ export function getText(node: Node): string | null {
 
 export function getX(node: Element): number {
   const rect = node.getBoundingClientRect();
+
+  // Internet Explorer does not support scrollX, but provides the non-standard pageXOffset
+  if (window.scrollX === undefined && window.pageXOffset) {
+    return rect.left + window.pageXOffset;
+  }
+
   return rect.left + window.scrollX;
 }
 
 export function getY(node: Element): number {
   const rect = node.getBoundingClientRect();
+
+  // Internet Explorer does not support scrollY, but provides the non-standard pageYOffset
+  if (window.scrollY === undefined && window.pageYOffset) {
+    return rect.top + window.pageYOffset;
+  }
+
   return rect.top + window.scrollY;
 }
 
