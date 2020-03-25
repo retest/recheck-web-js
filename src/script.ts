@@ -84,7 +84,7 @@ export function transform(node: any): { [key: string]: any } {
     tagName: node.tagName.toLowerCase() as string,
     text: getText(node) as string,
     value: node.value as string,
-    'tab-index': node.tabIndex as number,
+    tabindex: node.tabIndex as number,
     shown: isShown(node) as boolean,
   };
   if (node.nodeType === node.TEXT_NODE) {
