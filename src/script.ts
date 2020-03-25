@@ -97,7 +97,9 @@ export function transform(node: any): { [key: string]: any } {
   for (let i = 0; i < attrs.length; i++) {
     const attributeName = attrs[i].name;
     const attributeValue = attrs[i].value;
-    extractedAttributes[attributeName] = attributeValue;
+    if (attributeValue != undefined && attributeValue != '' && attributeValue != 'null') {
+      extractedAttributes[attributeName] = attributeValue;
+    }
   }
   // overwrite empty attributes (e.g. 'disabled')
   extractedAttributes['checked'] = node.checked;
