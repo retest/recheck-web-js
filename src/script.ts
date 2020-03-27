@@ -84,8 +84,9 @@ export function transform(node: any): { [key: string]: any } {
     tagName: node.tagName.toLowerCase() as string,
     text: getText(node) as string,
     value: node.value as string,
-    'tab-index': node.tabIndex as number,
+    tabindex: node.tabIndex as number,
     shown: isShown(node) as boolean,
+    covered: isCovered(node) as boolean,
   };
   if (node.nodeType === node.TEXT_NODE) {
     addCoordinates(extractedAttributes, node.parentNode as Element);
@@ -96,7 +97,9 @@ export function transform(node: any): { [key: string]: any } {
   for (let i = 0; i < attrs.length; i++) {
     const attributeName = attrs[i].name;
     const attributeValue = attrs[i].value;
-    extractedAttributes[attributeName] = attributeValue;
+    if (attributeValue != undefined && attributeValue != '' && attributeValue != 'null') {
+      extractedAttributes[attributeName] = attributeValue;
+    }
   }
   // overwrite empty attributes (e.g. 'disabled')
   extractedAttributes['checked'] = node.checked;
@@ -130,31 +133,57 @@ export function getText(node: Node): string | null {
 
 export function getX(node: Element): number {
   const rect = node.getBoundingClientRect();
+
+  // Internet Explorer does not support scrollX, but provides the non-standard pageXOffset
+  if (window.scrollX === undefined && window.pageXOffset) {
+    return rect.left + window.pageXOffset;
+  }
+
   return rect.left + window.scrollX;
 }
 
 export function getY(node: Element): number {
   const rect = node.getBoundingClientRect();
+
+  // Internet Explorer does not support scrollY, but provides the non-standard pageYOffset
+  if (window.scrollY === undefined && window.pageYOffset) {
+    return rect.top + window.pageYOffset;
+  }
+
   return rect.top + window.scrollY;
+}
+
+export function getWidth(node: Element): number {
+  if (node.getBoundingClientRect().width) {
+    return node.getBoundingClientRect().width;
+  }
+  return node.clientWidth;
+}
+
+export function getHeight(node: Element): number {
+  if (node.getBoundingClientRect().height) {
+    return node.getBoundingClientRect().height;
+  }
+  return node.clientHeight;
 }
 
 export function addCoordinates(attributes: ExportedAttributes, node: Element): void {
   // these attributes need special treatment
   attributes['absolute-x'] = getX(node);
   attributes['absolute-y'] = getY(node);
-  attributes['absolute-width'] = node.getBoundingClientRect().width;
-  attributes['absolute-height'] = node.getBoundingClientRect().height;
+  attributes['absolute-width'] = getWidth(node);
+  attributes['absolute-height'] = getHeight(node);
   const parentNode = node.parentNode as Element;
   if (typeof parentNode.getBoundingClientRect === 'function') {
     attributes['x'] = getX(node) - getX(parentNode);
     attributes['y'] = getY(node) - getY(parentNode);
-    attributes['width'] = node.getBoundingClientRect().width - parentNode.getBoundingClientRect().width;
-    attributes['height'] = node.getBoundingClientRect().height - parentNode.getBoundingClientRect().height;
+    attributes['width'] = getWidth(node) - getWidth(parentNode);
+    attributes['height'] = getHeight(node) - getHeight(parentNode);
   } else {
     attributes['x'] = getX(node);
     attributes['y'] = getY(node);
-    attributes['width'] = node.getBoundingClientRect().width;
-    attributes['height'] = node.getBoundingClientRect().height;
+    attributes['width'] = getWidth(node);
+    attributes['height'] = getHeight(node);
   }
 }
 
@@ -169,6 +198,34 @@ export function isDisabled(node: any): boolean {
     return true;
   }
   return node.disabled ? true : false;
+}
+
+// check if element is behind another one
+export function isCovered(node: any): boolean {
+  const BOUNDING_PRECISION = 2;
+
+  // TODO Handle false negatives for elements outside of viewport
+  if (typeof node.getBoundingClientRect === 'function' && document.elementFromPoint != undefined) {
+    const boundingRect = node.getBoundingClientRect();
+
+    const boundingLeft = boundingRect.left + BOUNDING_PRECISION;
+    const boundingRight = boundingRect.right - BOUNDING_PRECISION;
+    const boundingTop = boundingRect.top + BOUNDING_PRECISION;
+    const boundingBottom = boundingRect.bottom - BOUNDING_PRECISION;
+
+    const topLeft = document.elementFromPoint(boundingLeft, boundingTop);
+    const topRight = document.elementFromPoint(boundingRight, boundingTop);
+    const bottomLeft = document.elementFromPoint(boundingLeft, boundingBottom);
+    const bottomRight = document.elementFromPoint(boundingRight, boundingBottom);
+    if ((topLeft != null && !node.contains(topLeft))
+      || (topRight != null && !node.contains(topRight))
+      || (bottomLeft != null && !node.contains(bottomLeft))
+      || (bottomRight != null && !node.contains(bottomRight))) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 //extract *given* CSS style attributes
