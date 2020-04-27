@@ -104,6 +104,7 @@ export function transform(node: any): { [key: string]: any } {
   // overwrite empty attributes (e.g. 'disabled')
   extractedAttributes['checked'] = node.checked;
   extractedAttributes['disabled'] = isDisabled(node as Element);
+  extractedAttributes['autofocus'] = hasAutofocus(node as Element);
   extractedAttributes['read-only'] = node.readOnly;
   // extract *given* CSS style attributes
   const style: { [k: string]: any } = getComputedStyleSafely(node as Element);
@@ -198,6 +199,19 @@ export function isDisabled(node: any): boolean {
     return true;
   }
   return node.disabled ? true : false;
+}
+
+export function hasAutofocus(node: any): boolean {
+  if (!node.autofocus) {
+    return false;
+  }
+  if (node.autofocus === '') {
+    return false;
+  }
+  if (node.autofocus === 'autofocus') {
+    return true;
+  }
+  return node.autofocus;
 }
 
 // check if element is behind another one
