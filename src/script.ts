@@ -14,7 +14,7 @@ export class Counter {
 }
 
 interface ExportedAttributes {
-  [key: string]: string | number | boolean | undefined
+  [key: string]: string | number | boolean | undefined;
 }
 
 export default function getAllElementsByXPath(node: any): { [k: string]: any } {
@@ -216,25 +216,39 @@ export function hasAutofocus(node: any): boolean {
 
 // check if element is behind another one
 export function isCovered(node: any): boolean {
-  const BOUNDING_PRECISION = 2;
+  const BOUNDING_PRECISION = 1;
 
   // TODO Handle false negatives for elements outside of viewport
   if (typeof node.getBoundingClientRect === 'function' && document.elementFromPoint != undefined) {
     const boundingRect = node.getBoundingClientRect();
 
-    const boundingLeft = boundingRect.left + BOUNDING_PRECISION;
-    const boundingRight = boundingRect.right - BOUNDING_PRECISION;
-    const boundingTop = boundingRect.top + BOUNDING_PRECISION;
-    const boundingBottom = boundingRect.bottom - BOUNDING_PRECISION;
+    const top = document.elementFromPoint(
+      boundingRect.left + boundingRect.width / 2,
+      boundingRect.top + BOUNDING_PRECISION,
+    );
+    const bottom = document.elementFromPoint(
+      boundingRect.left + boundingRect.width / 2,
+      boundingRect.bottom - BOUNDING_PRECISION,
+    );
+    const left = document.elementFromPoint(
+      boundingRect.left + BOUNDING_PRECISION,
+      boundingRect.top + boundingRect.height / 2,
+    );
+    const right = document.elementFromPoint(
+      boundingRect.right - BOUNDING_PRECISION,
+      boundingRect.top + boundingRect.height / 2,
+    );
 
-    const topLeft = document.elementFromPoint(boundingLeft, boundingTop);
-    const topRight = document.elementFromPoint(boundingRight, boundingTop);
-    const bottomLeft = document.elementFromPoint(boundingLeft, boundingBottom);
-    const bottomRight = document.elementFromPoint(boundingRight, boundingBottom);
-    if ((topLeft != null && !node.contains(topLeft))
-      || (topRight != null && !node.contains(topRight))
-      || (bottomLeft != null && !node.contains(bottomLeft))
-      || (bottomRight != null && !node.contains(bottomRight))) {
+    if (
+      top != null &&
+      !node.contains(top) &&
+      bottom != null &&
+      !node.contains(bottom) &&
+      left != null &&
+      !node.contains(left) &&
+      right != null &&
+      !node.contains(right)
+    ) {
       return true;
     }
   }
