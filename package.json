@@ -21,8 +21,8 @@
     "coverage": "nyc npm run test"
   },
   "author": {
-    "name": "ReTest GmbH",
-    "email": "opensource+recheck-web-js@retest.de",
+    "name": "UBS Hainer GmbH",
+    "email": "info@retest.de",
     "url": "https://retest.de/"
   },
   "license": "AGPL-V3",
