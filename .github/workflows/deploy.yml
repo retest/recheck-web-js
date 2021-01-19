@@ -3,10 +3,6 @@ name: deploy
 on:
   push:
     tags: v*
-  workflow_run:
-    workflows: ["build"]
-    types:
-      - completed
 
 jobs:
   build:
