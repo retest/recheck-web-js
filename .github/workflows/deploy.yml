@@ -10,7 +10,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -27,6 +26,6 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_API_KEY }}
 
-    -   run: |
+    - run: |
       sleep 20
       curl "https://www.webjars.org/deploy?webJarType=npm&nameOrUrlish=recheck-web-js&version=${GITHUB_REF#refs/tags/v}"
