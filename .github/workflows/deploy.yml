@@ -1,0 +1,32 @@
+name: deploy
+
+on:
+  push:
+    tags: v*
+  workflow_run:
+    workflows: ["build"]
+    types:
+      - completed
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+        registry-url: 'https://registry.npmjs.org'
+
+    - run: npm install
+
+    - run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_API_KEY }}
+
+    -   run: |
+      sleep 20
+      curl "https://www.webjars.org/deploy?webJarType=npm&nameOrUrlish=recheck-web-js&version=${GITHUB_REF#refs/tags/v}"
